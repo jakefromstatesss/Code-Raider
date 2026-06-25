@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Code Raider</title>
+    <meta name="description" content="A minimalist, modern helper tool for Rust base code lock guessing featuring global media control integration.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-container"></div>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="brand">
+                <h1>RUST CODE RAIDER</h1>
+                <span class="version">V1.0</span>
+            </div>
+            <div class="status-badge" id="statusBadge">READY</div>
+        </header>
+
+        <main class="app-main">
+            <section class="code-display-panel">
+                <div class="panel-header">
+                    <span class="label">CURRENT ATTEMPT</span>
+                    <span class="preset-name" id="currentPresetName">COMMON CODES (1000)</span>
+                </div>
+                
+                <div class="code-readout" id="currentCode">0000</div>
+                
+                <div class="next-code-bar">
+                    <span class="next-label">NEXT IN QUEUE</span>
+                    <span class="next-value" id="nextCode">----</span>
+                </div>
+
+                <div class="main-controls">
+                    <button class="btn btn-prev" id="btnPrev" title="Previous Code (Media Previous)">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y5="5"></line></svg>
+                    </button>
+                    
+                    <button class="btn btn-primary" id="btnToggle" title="Start/Pause Raid Session">
+                        <span id="btnToggleText">START SESSION</span>
+                    </button>
+                    
+                    <button class="btn btn-next" id="btnNext" title="Next Code (Media Next / Skip Song)">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y5="19"></line></svg>
+                    </button>
+                </div>
+            </section>
+
+            <section class="stats-panel">
+                <div class="stat-card">
+                    <span class="stat-label">SESSION ELAPSED</span>
+                    <span class="stat-value font-mono" id="timerValue">00:00:00</span>
+                </div>
+                
+                <div class="stat-card">
+                    <span class="stat-label">CODES PROGRESS</span>
+                    <div class="progress-details">
+                        <span class="stat-value font-mono" id="progressText">0 / 0</span>
+                        <span class="stat-percent font-mono" id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-card mini">
+                        <span class="stat-label">SPEED</span>
+                        <span class="stat-value font-mono" id="cpmValue">0 <span class="unit">CPM</span></span>
+                    </div>
+                    <div class="stat-card mini">
+                        <span class="stat-label">EST. REMAINING</span>
+                        <span class="stat-value font-mono" id="etaValue">--:--:--</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="bottom-layout">
+                <section class="setup-panel">
+                    <h2>CONFIGURATION</h2>
+                    
+                    <div class="form-group">
+                        <label for="queuePreset">CODE ORDER PRESET</label>
+                        <select id="queuePreset">
+                            <option value="common">Most Common (Top 1000)</option>
+                            <option value="common_all" selected>Most Common (All 10,000)</option>
+                            <option value="sequential">Sequential (0000 - 9999)</option>
+                            <option value="custom">Custom Code List</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group hidden" id="customInputGroup">
+                        <label for="customCodesList">CUSTOM CODES (ONE PER LINE)</label>
+                        <textarea id="customCodesList" placeholder="1234&#10;5678&#10;4321" rows="5"></textarea>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="toggle-setting">
+                            <div class="setting-info">
+                                <span class="setting-title">SYNTHESIZED AUDITORY FEEDBACK</span>
+                                <span class="setting-desc">Play beep sound when changing codes</span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggleSound" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="instructions-card">
+                        <h3>GLOBAL SHORTCUT SETUP</h3>
+                        <p>This web app binds to the browser's <strong>Media Session API</strong> using a looping silent audio track. Once the session is started, you can press your keyboard's <strong>Skip Song / Next Track</strong> media key (or bind a hotkey to it in your software) to cycle codes globally while in-game.</p>
+                    </div>
+                    
+                    <div class="reset-container">
+                        <button class="btn btn-outline" id="btnReset">RESET CURRENT RAID</button>
+                    </div>
+                </section>
+
+                <section class="history-panel">
+                    <h2>HISTORY</h2>
+                    <div class="history-list" id="historyList">
+                        <div class="history-empty">No codes tried yet. Start session to log history.</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="codes.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
